@@ -1,11 +1,13 @@
 package org.example;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
     //static Scanner scanner = new Scanner(System.in); Går inte att köra testerna med en Scanner som statiskt fält.
     public static void main(String[] args) {
+        Locale.setDefault(Locale.forLanguageTag("sv-SE"));
         Scanner scanner = new Scanner(System.in);
         String[] timeOfDay = {"00-01", "01-02", "02-03", "03-04", "04-05", "05-06", "06-07", "07-08", "08-09", "09-10", "10-11", "11-12", "12-13", "13-14", "14-15", "15-16", "16-17", "17-18", "18-19", "19-20", "20-21", "21-22", "22-23", "23-24"};
         int[] elPriser = new int[timeOfDay.length];
@@ -73,10 +75,9 @@ public class App {
         }
         medel = (medel / 24);
         medel = (float) Math.round(medel * 100) / 100;
-        String formatComma = String.format("%,.2f", medel);
         System.out.print("Lägsta pris: " + minTime + ", " + min + " öre/kWh\n");
         System.out.print("Högsta pris: " + maxTime + ", " + max + " öre/kWh\n");
-        System.out.print("Medelpris: " + formatComma + " öre/kWh\n");
+        System.out.printf(Locale.getDefault(),"Medelpris: %.2f öre/kWh\n", medel);
     }
 
     public static void bestChargeTime(String[] date, int[] price) {
@@ -89,9 +90,7 @@ public class App {
             }
         }
         String[] print = startPoint.split("-");
-        String formatComma = String.format("%,.1f", priceFourBest / 4);
-
-        System.out.print("Påbörja laddning klockan " + print[0] + "\nMedelpris 4h: " + formatComma + " öre/kWh\n");
+        System.out.printf(Locale.getDefault(),"Påbörja laddning klockan %s\nMedelpris 4h: %.1f öre/kWh\n",print[0], (priceFourBest / 4));
     }
 
     public static void printPrice(String[] date, int[] price) {
